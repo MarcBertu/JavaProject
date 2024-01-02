@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">JavaProject</string>
+
+    <string name="login_label">Login : </string>
+    <string name="password_label">Password : </string>
+    <string name="username_input_text">Enter a username</string>
+    <string name="password_input_text">Enter a password</string>
+
+    <string name="login_button">Login</string>
+    <string name="create_account">Create my account</string>
 </resources>
