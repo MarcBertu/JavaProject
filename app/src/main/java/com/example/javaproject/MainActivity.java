@@ -22,13 +22,18 @@ import android.widget.ImageView;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Calendar;
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final static int TAKE_PICTURE_INTENT = 100;
-    private final static int CHOOSE_PICTURE_FROM_GALLERY = 101;
-    private final static int CHOOSE_PDF_FROM_DOCUMENT = 102;
+    /**
+     *  Si vous voyez ce message il faut comprendre que le projet se réparti en deux activités (pour une meilleur compréhension):
+     *   La MainActivity permet de faire comprendre comment à partir d'un fichier on peut déterminer sa taille,
+     *   savoir si celui doit être compressé et comment le compressé
+     *
+     *   La deuxième Activity elle est présente pour presenter les 3 façons de récupérer ce fameux fichier
+     *   Le tout sans librairie externe aux SDK d'Android et qui respecte l'API 21 au minimum
+     */
 
     private final static int NUMBER_OF_MAXIMUM_BYTE = 921600; // 1 KB = 1024 Byte -> 900 KB = 900 * 1024 = 921600
 
@@ -40,8 +45,6 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Ordre du fichier :
      * - Méthode onCreate
-     * - la méthode OnActivityResult
-     * - Les méthodes pour lancer le processus dédié selon le choix de l'utilisateur
      * - La méthode de compression
      */
 
@@ -107,37 +110,10 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             Log.i("File exist :", "NO");
+            //TODO: Traitez l'erreur
         }
 
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == Activity.RESULT_OK && data != null) {
-            switch (requestCode) {
-                case TAKE_PICTURE_INTENT:
-                    break;
-                case CHOOSE_PICTURE_FROM_GALLERY:
-                    break;
-                case CHOOSE_PDF_FROM_DOCUMENT:
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-
-    // Prendre une photo
-    private void takePhoto() {
-
-    }
-
-    // Photo venant de la gallerie d'image
-
-
-    // PDF ( plus tard )
 
 
     // La méthode compression
@@ -145,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
     private void compressBitmap(Bitmap bitmap, ImageView compressImageView) {
         if (bitmap == null) {
             Log.i("Bitmap status", "Bitmap is null");
+            //TODO: Traitez l'erreur
         }
         else {
             Bitmap compressBitmap;
@@ -176,8 +153,10 @@ public class MainActivity extends AppCompatActivity {
                 outputStream.close();
             }
         }
-        catch (Exception e) {
+        catch (IOException e) {
             e.printStackTrace();
+
+            //TODO: Traitez l'erreur
         }
 
         if (outputFile.exists()) {
@@ -185,6 +164,8 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             Log.i("File created :", "NO");
+
+            //TODO: //TODO: Traitez le problème
         }
     }
 
